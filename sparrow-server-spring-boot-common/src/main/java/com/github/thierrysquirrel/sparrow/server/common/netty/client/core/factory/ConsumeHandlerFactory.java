@@ -50,7 +50,7 @@ public class ConsumeHandlerFactory {
     public static void pushMessage(ConsumerListener consumerListener, ChannelHandlerContext ctx, SparrowRequestContext msg) {
         ResponseDomain responseDomain = (ResponseDomain) msg.getSparrowResponse ().getData ();
         SparrowMessage sparrowMessage = (SparrowMessage) responseDomain.getData ();
-        Long id = consumer (consumerListener, ctx, sparrowMessage);
+        Long id = consumer (consumerListener, sparrowMessage);
         if (null != id) {
             SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption (id);
             ctx.writeAndFlush (sparrowRequestContext);
@@ -67,7 +67,7 @@ public class ConsumeHandlerFactory {
         String topic = null;
         List<Long> idList = new ArrayList<> ();
         for (SparrowMessage sparrowMessage : sparrowMessageList) {
-            Long id = consumer (consumerListener, ctx, sparrowMessage);
+            Long id = consumer (consumerListener, sparrowMessage);
             if (null != id) {
                 idList.add (id);
             }
@@ -86,7 +86,7 @@ public class ConsumeHandlerFactory {
         ctx.writeAndFlush (sparrowRequestContext);
     }
 
-    private static Long consumer(ConsumerListener consumerListener, ChannelHandlerContext ctx, SparrowMessage sparrowMessage) {
+    private static Long consumer(ConsumerListener consumerListener, SparrowMessage sparrowMessage) {
         ConsumerState consumerState = consumerListener.consumer (sparrowMessage.getMessage ());
         if (ConsumerState.SUCCESS == consumerState) {
             return sparrowMessage.getId ();

@@ -31,19 +31,19 @@ public class ConsumerClusterFactory {
     private ConsumerClusterFactory() {
     }
 
-    private static void request(ConsumerInit consumerInit, String topic, String clusterUrl, SparrowRequestContext sparrowRequestContext) throws InterruptedException {
+    private static void request(ConsumerInit consumerInit, SparrowRequestContext sparrowRequestContext) throws InterruptedException {
         consumerInit.init ();
         consumerInit.getChannel ().writeAndFlush (sparrowRequestContext);
     }
 
     public static void ping(ConsumerInit consumerInit, String topic, String clusterUrl) throws InterruptedException {
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPing (topic);
-        request (consumerInit, topic, clusterUrl, sparrowRequestContext);
+        request (consumerInit, sparrowRequestContext);
     }
 
     public static void pull(String topic, String clusterUrl, int pageIndex, int pageSize) throws InterruptedException {
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessage (topic, pageIndex, pageSize);
         ConsumerInit consumerInit = ConsumerClusterCacheFactory.getConsumerInit (topic, clusterUrl);
-        request (consumerInit, topic, clusterUrl, sparrowRequestContext);
+        request (consumerInit, sparrowRequestContext);
     }
 }
