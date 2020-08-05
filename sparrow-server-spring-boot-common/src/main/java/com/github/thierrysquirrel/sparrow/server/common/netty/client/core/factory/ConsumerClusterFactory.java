@@ -36,7 +36,7 @@ public class ConsumerClusterFactory {
         consumerInit.getChannel ().writeAndFlush (sparrowRequestContext);
     }
 
-    public static void ping(ConsumerInit consumerInit, String topic, String clusterUrl) throws InterruptedException {
+    public static void ping(ConsumerInit consumerInit, String topic) throws InterruptedException {
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPing (topic);
         request (consumerInit, sparrowRequestContext);
     }
