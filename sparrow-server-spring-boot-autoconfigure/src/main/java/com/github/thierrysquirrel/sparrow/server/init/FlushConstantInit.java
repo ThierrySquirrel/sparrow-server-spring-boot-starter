@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
+package com.github.thierrysquirrel.sparrow.server.init;
 
+import com.github.thierrysquirrel.sparrow.server.init.execution.FlushConstantInitExecution;
+import com.github.thierrysquirrel.sparrow.server.service.AdministrationService;
 import lombok.Data;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: FlushConstantInit
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/7 23:39
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
 @Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public class FlushConstantInit {
+    @Resource
+    private AdministrationService administrationService;
+    @PostConstruct
+    public void init() {
+        FlushConstantInitExecution.flushConstant (administrationService);
+    }
 }

@@ -34,11 +34,11 @@ public class SparrowMessageEntity {
 
     private String topic;
 
-    private byte isCluster;
+    private Byte isCluster;
 
     private byte[] message;
 
-    private byte isDeleted;
+    private Byte isDeleted;
 
     private Date gmtCreate;
 

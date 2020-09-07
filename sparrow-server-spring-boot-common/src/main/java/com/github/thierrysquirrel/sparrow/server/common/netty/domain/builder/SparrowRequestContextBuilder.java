@@ -152,6 +152,15 @@ public class SparrowRequestContextBuilder {
         return sparrowRequestContext;
     }
 
+    public static SparrowRequestContext builderPushBatchMessage(BatchSparrowMessage batchSparrowMessage){
+        SparrowRequestContext sparrowRequestContext = createSparrowRequestContext ();
+        SparrowRequestContextCommandBuilder.builderPushBatchMessage (sparrowRequestContext);
+
+        SparrowResponse sparrowResponse = SparrowResponseBuilder.builderSuccess (batchSparrowMessage);
+        sparrowRequestContext.setSparrowResponse (sparrowResponse);
+        return sparrowRequestContext;
+    }
+
     public static SparrowRequestContext builderSuccess() {
         SparrowRequestContext sparrowRequestContext = createSparrowRequestContext ();
         SparrowResponse sparrowResponse = SparrowResponseBuilder.builderSuccess ();

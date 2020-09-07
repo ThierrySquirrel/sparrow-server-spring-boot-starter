@@ -16,30 +16,29 @@
 package com.github.thierrysquirrel.sparrow.server.thread.execution;
 
 import com.github.thierrysquirrel.sparrow.server.service.AdministrationService;
-import com.github.thierrysquirrel.sparrow.server.thread.AbstractRemoveExpiredDataThread;
+import com.github.thierrysquirrel.sparrow.server.thread.AbstractFlushConstantThread;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * ClassName: RemoveExpiredDataThreadExecution
+ * ClassName: FlushConstantThreadExecution
  * Description:
- * date: 2020/6/9 5:26
+ * date: 2020/9/7 23:37
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
 @Slf4j
-public class RemoveExpiredDataThreadExecution extends AbstractRemoveExpiredDataThread {
-
-    public RemoveExpiredDataThreadExecution(AdministrationService administrationService) {
+public class FlushConstantThreadExecution extends AbstractFlushConstantThread {
+    public FlushConstantThreadExecution(AdministrationService administrationService) {
         super (administrationService);
     }
 
     @Override
-    protected void removeExpiredData(AdministrationService administrationService) {
+    protected void flushConstant(AdministrationService administrationService) {
         try {
-            administrationService.removeExpiredData ();
-        } catch (Exception e) {
-            log.error ("removeExpiredDataError", e);
+            administrationService.flushConstant ();
+        }catch (Exception e){
+            log.error ("administrationServiceError",e);
         }
     }
 }

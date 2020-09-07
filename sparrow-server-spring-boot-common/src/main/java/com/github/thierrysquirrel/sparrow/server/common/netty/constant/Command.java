@@ -69,6 +69,10 @@ public enum Command {
      */
     PUSH_MESSAGE,
     /**
+     * PushBatchMessage
+     */
+    PUSH_BATCH_MESSAGE,
+    /**
      * SynchronousClusterTopicCache
      */
     SYNCHRONOUS_CLUSTER_TOPIC_CACHE;

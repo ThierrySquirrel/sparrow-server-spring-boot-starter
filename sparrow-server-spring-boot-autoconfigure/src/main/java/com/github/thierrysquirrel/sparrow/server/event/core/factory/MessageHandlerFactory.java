@@ -15,12 +15,12 @@
  */
 package com.github.thierrysquirrel.sparrow.server.event.core.factory;
 
-import com.github.thierrysquirrel.sparrow.server.core.factory.execution.PushMessageFactoryExecution;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.PageSparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequestContext;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.SparrowRequestContextBuilder;
-import com.github.thierrysquirrel.sparrow.server.mapper.utils.MapperUtils;
+import com.github.thierrysquirrel.sparrow.server.core.factory.RateLimiterFactory;
+import com.github.thierrysquirrel.sparrow.server.mapper.entity.SparrowTopicEntity;
 import com.github.thierrysquirrel.sparrow.server.service.AdministrationService;
 import org.springframework.util.ObjectUtils;
 
@@ -35,7 +35,6 @@ import java.util.List;
  * @since JDK 1.8
  */
 public class MessageHandlerFactory {
-
     private MessageHandlerFactory() {
     }
 
@@ -50,16 +49,15 @@ public class MessageHandlerFactory {
     }
 
     public static SparrowRequestContext postMessage(AdministrationService administrationService, String topic, byte[] message) {
-        SparrowMessage sparrowMessage = administrationService.postMessage (topic, message);
-        if (ObjectUtils.isEmpty (sparrowMessage)) {
+        SparrowTopicEntity topicEntity = administrationService.getTopic (topic);
+        if (ObjectUtils.isEmpty (topicEntity)) {
             return SparrowRequestContextBuilder.builderFailed ("PostMessage Topic Does Not Exist");
         }
-        byte isCluster = sparrowMessage.getIsCluster ();
-        if (MapperUtils.isClusterConversion (isCluster)) {
-            PushMessageFactoryExecution.clusterPushMessage (sparrowMessage);
-        } else {
-            PushMessageFactoryExecution.broadcastPushMessage (sparrowMessage);
+        if (!RateLimiterFactory.isRelease (topic)) {
+            SparrowMessage sparrowMessage = administrationService.pushBatchMessage (topic, message);
+            return SparrowRequestContextBuilder.builderSuccess (sparrowMessage);
         }
+        SparrowMessage sparrowMessage = administrationService.postMessage (topic, message);
         return SparrowRequestContextBuilder.builderSuccess (sparrowMessage);
     }
 

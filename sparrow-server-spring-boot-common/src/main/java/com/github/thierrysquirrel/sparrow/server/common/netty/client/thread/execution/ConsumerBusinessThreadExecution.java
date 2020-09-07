@@ -23,8 +23,8 @@ import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequ
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * ClassName: ConsumerBusinessThreadExecution 
- * Description: 
+ * ClassName: ConsumerBusinessThreadExecution
+ * Description:
  * date: 2020/6/11 6:53
  *
  * @author ThierrySquirrel
@@ -44,6 +44,9 @@ public class ConsumerBusinessThreadExecution extends AbstractConsumerBusinessThr
         }
         if (Command.PUSH_MESSAGE == command) {
             ConsumeHandlerFactory.pushMessage (consumerListener, ctx, msg);
+        }
+        if (Command.PUSH_BATCH_MESSAGE == command) {
+            ConsumeHandlerFactory.pushBatchMessage (consumerListener, ctx, msg);
         }
     }
 }

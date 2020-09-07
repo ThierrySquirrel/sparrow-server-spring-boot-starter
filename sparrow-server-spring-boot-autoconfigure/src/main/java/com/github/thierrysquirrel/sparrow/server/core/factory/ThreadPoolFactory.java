@@ -90,4 +90,10 @@ public class ThreadPoolFactory {
         );
     }
 
+    public static ScheduledThreadPoolExecutor createFlushConstantThreadPool() {
+        ThreadFactory threadFactory = new ThreadFactoryBuilder ()
+                .setNameFormat (ThreadPoolConstant.FLUSH_CONSTANT).build ();
+        return new ScheduledThreadPoolExecutor (ThreadPoolConstant.FLUSH_CONSTANT_CORE_POOL_SIZE, threadFactory);
+    }
+
 }

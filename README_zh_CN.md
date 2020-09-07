@@ -21,7 +21,7 @@ Sparrow Server Spring Book Edition
         <dependency>
             <artifactId>sparrow-server-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>1.0.3-RELEASE</version>
+            <version>2.0.0-RELEASE</version>
         </dependency>
 ``` 
 
@@ -32,6 +32,7 @@ Sparrow Server Spring Book Edition
 spring.datasource.url= #MySQL数据库Url
 spring.datasource.username= #MySQL数据库username
 spring.datasource.password= #MySQL数据库password
+mybatis.configuration.map-underscore-to-camel-case=true # 开启Mybatis转换
 sparrow.server.url=127.0.0.1:6060 # 这是必须填写的，用于服务启动
 sparrow.server.cluster-server-url=127.0.0.1:6060,127.0.0.1:6061 # 如果您需要集群,请这样填写
  ```

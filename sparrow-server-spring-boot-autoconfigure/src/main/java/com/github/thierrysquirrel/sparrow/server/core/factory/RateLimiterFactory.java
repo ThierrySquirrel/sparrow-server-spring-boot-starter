@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
+package com.github.thierrysquirrel.sparrow.server.core.factory;
 
-import lombok.Data;
+import com.github.thierrysquirrel.sparrow.server.core.factory.constant.RateLimiterConstant;
+import com.google.common.collect.Maps;
+import com.google.common.util.concurrent.RateLimiter;
 
-import java.util.List;
+import java.util.Map;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: RateLimiterFactory
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/7 22:19
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public class RateLimiterFactory {
+    private static final Map<String, RateLimiter> INSERT_LIMITER_MAP = Maps.newConcurrentMap ();
+
+    private RateLimiterFactory() {
+    }
+
+    public static boolean isRelease(String topic) {
+        return INSERT_LIMITER_MAP.computeIfAbsent (topic, key -> RateLimiter.create (RateLimiterConstant.INSERT_PERMITS_PER_SECOND)).tryAcquire ();
+    }
 }

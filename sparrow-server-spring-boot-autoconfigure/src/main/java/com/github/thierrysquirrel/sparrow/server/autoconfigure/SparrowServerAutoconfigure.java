@@ -16,10 +16,7 @@
 package com.github.thierrysquirrel.sparrow.server.autoconfigure;
 
 import com.github.thierrysquirrel.sparrow.server.autoconfigure.constant.ComponentScanConstant;
-import com.github.thierrysquirrel.sparrow.server.init.RemoveExpiredDataInit;
-import com.github.thierrysquirrel.sparrow.server.init.SparrowServerDatabaseInit;
-import com.github.thierrysquirrel.sparrow.server.init.SparrowServerEventInit;
-import com.github.thierrysquirrel.sparrow.server.init.SparrowServerInit;
+import com.github.thierrysquirrel.sparrow.server.init.*;
 import com.github.thierrysquirrel.sparrow.server.mapper.builder.CacheTemplateBuilder;
 import com.github.thierrysquirrel.sparrow.server.mapper.template.SparrowTopicEntityCacheTemplate;
 import com.github.thierrysquirrel.sparrow.server.service.AdministrationService;
@@ -78,5 +75,11 @@ public class SparrowServerAutoconfigure {
     @ConditionalOnMissingBean(RemoveExpiredDataInit.class)
     public RemoveExpiredDataInit removeExpiredDataInit() {
         return new RemoveExpiredDataInit ();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(FlushConstantInit.class)
+    public FlushConstantInit flushConstantInit(){
+        return new FlushConstantInit ();
     }
 }

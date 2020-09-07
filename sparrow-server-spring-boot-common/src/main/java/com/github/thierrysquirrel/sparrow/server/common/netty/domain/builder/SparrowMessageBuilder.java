@@ -13,24 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
+package com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder;
 
-import lombok.Data;
-
-import java.util.List;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: SparrowMessageBuilder
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/8 5:43
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public class SparrowMessageBuilder {
+    private SparrowMessageBuilder() {
+    }
+
+    public static SparrowMessage builderProducersResponseSparrowMessage(String topic, byte isCluster, byte[] message) {
+        SparrowMessage sparrowMessage = new SparrowMessage ();
+        sparrowMessage.setTopic (topic);
+        sparrowMessage.setIsCluster (isCluster);
+        sparrowMessage.setMessage (message);
+        return sparrowMessage;
+    }
 }

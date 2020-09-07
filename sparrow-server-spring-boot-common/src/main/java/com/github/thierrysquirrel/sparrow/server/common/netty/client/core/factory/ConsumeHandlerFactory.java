@@ -57,6 +57,14 @@ public class ConsumeHandlerFactory {
         }
     }
 
+    public static void pushBatchMessage(ConsumerListener consumerListener, ChannelHandlerContext ctx, SparrowRequestContext msg) {
+        ResponseDomain responseDomain  = (ResponseDomain) msg.getSparrowResponse ().getData ();
+        BatchSparrowMessage batchSparrowMessage= (BatchSparrowMessage) responseDomain.getData ();
+        List<Long> idList = batchConsumer (consumerListener, batchSparrowMessage.getSparrowMessageList ());
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderBatchConfirmConsumption (idList);
+        ctx.writeAndFlush (sparrowRequestContext);
+    }
+
     public static void pullMessage(ConsumerListener consumerListener, ChannelHandlerContext ctx, SparrowRequestContext msg) {
         ResponseDomain responseDomain = (ResponseDomain) msg.getSparrowResponse ().getData ();
         PageSparrowMessage pageSparrowMessage = (PageSparrowMessage) responseDomain.getData ();
@@ -64,22 +72,13 @@ public class ConsumeHandlerFactory {
         if (null == sparrowMessageList || sparrowMessageList.isEmpty ()) {
             return;
         }
-        String topic = null;
-        List<Long> idList = new ArrayList<> ();
-        for (SparrowMessage sparrowMessage : sparrowMessageList) {
-            Long id = consumer (consumerListener, sparrowMessage);
-            if (null != id) {
-                idList.add (id);
-            }
-            if (null == topic) {
-                topic = sparrowMessage.getTopic ();
-            }
-        }
+
+        List<Long> idList = batchConsumer (consumerListener, sparrowMessageList);
 
         int pageIndex = pageSparrowMessage.getPageIndex ();
         ++pageIndex;
         if (pageIndex < pageSparrowMessage.getPageTotal ()) {
-            SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessage (topic, pageIndex, ConsumerConstant.PULL_SIZE);
+            SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessage (pageSparrowMessage.getTopic (), pageIndex, ConsumerConstant.PULL_SIZE);
             ctx.writeAndFlush (sparrowRequestContext);
         }
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderBatchConfirmConsumption (idList);
@@ -92,5 +91,16 @@ public class ConsumeHandlerFactory {
             return sparrowMessage.getId ();
         }
         return null;
+    }
+
+    private static List<Long> batchConsumer(ConsumerListener consumerListener, List<SparrowMessage> sparrowMessageList) {
+        List<Long> idList = new ArrayList<> ();
+        for (SparrowMessage sparrowMessage : sparrowMessageList) {
+            Long id = consumer (consumerListener, sparrowMessage);
+            if (null != id) {
+                idList.add (id);
+            }
+        }
+        return idList;
     }
 }

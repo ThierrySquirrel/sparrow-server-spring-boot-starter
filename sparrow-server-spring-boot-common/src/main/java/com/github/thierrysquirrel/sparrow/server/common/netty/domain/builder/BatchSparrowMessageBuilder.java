@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
+package com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder;
 
-import lombok.Data;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.BatchSparrowMessage;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
 
 import java.util.List;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: BatchSparrowMessageBuilder
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/7 23:19
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public class BatchSparrowMessageBuilder {
+    private BatchSparrowMessageBuilder() {
+    }
+
+    public static BatchSparrowMessage builderBatchSparrowMessage(List<SparrowMessage> sparrowMessageList) {
+        BatchSparrowMessage batchSparrowMessage = new BatchSparrowMessage ();
+        batchSparrowMessage.setSparrowMessageList (sparrowMessageList);
+        return batchSparrowMessage;
+    }
 }

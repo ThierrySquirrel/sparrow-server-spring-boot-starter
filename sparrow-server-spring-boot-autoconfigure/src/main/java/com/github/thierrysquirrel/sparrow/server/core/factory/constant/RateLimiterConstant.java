@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
-
-import lombok.Data;
-
-import java.util.List;
+package com.github.thierrysquirrel.sparrow.server.core.factory.constant;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: RateLimiterConstant
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/7 22:20
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public final class RateLimiterConstant {
+    public static final double INSERT_PERMITS_PER_SECOND = 64;
+    private RateLimiterConstant() {
+    }
 }

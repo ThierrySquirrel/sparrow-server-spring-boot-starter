@@ -113,10 +113,26 @@ public interface SparrowMessageMapper {
 
     /**
      * findCountByTopicAndIsDeleted
-     * @param topic topic
+     *
+     * @param topic     topic
      * @param isDeleted isDeleted
      * @return int
      */
-    @Select ("SELECT COUNT(*) FROM sparrow_message_entity WHERE topic = #{topic} AND is_deleted = #{isDeleted}")
+    @Select("SELECT COUNT(*) FROM sparrow_message_entity WHERE topic = #{topic} AND is_deleted = #{isDeleted}")
     int findCountByTopicAndIsDeleted(@Param("topic") String topic, @Param("isDeleted") byte isDeleted);
+
+    /**
+     * saveAll
+     *
+     * @param messageEntityList messageEntityList
+     * @return int
+     */
+    @Insert("<script> " +
+            "INSERT INTO sparrow_message_entity (topic,is_cluster,message) VALUES" +
+            "<foreach collection='messageEntityList' item='entity' separator=','> " +
+            "(#{entity.topic},#{entity.isCluster},#{entity.message})" +
+            "</foreach>  " +
+            "</script>")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    int saveAll(@Param("messageEntityList") List<SparrowMessageEntity> messageEntityList);
 }

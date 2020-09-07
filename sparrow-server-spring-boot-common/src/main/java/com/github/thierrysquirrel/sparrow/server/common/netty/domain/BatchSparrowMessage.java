@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.mapper.utils;
+package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
 
+import lombok.Data;
 
-import com.github.thierrysquirrel.sparrow.server.mapper.entity.SparrowTopicEntity;
+import java.util.List;
 
 /**
- * ClassName: SparrowTopicEntityUtils
+ * ClassName: BatchSparrowMessage
  * Description:
- * date: 2020/6/9 2:59
+ * date: 2020/9/7 23:19
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-public class SparrowTopicEntityUtils {
-    private SparrowTopicEntityUtils() {
-    }
-
-    public static void getTopic(SparrowTopicEntity sparrowTopicEntity) {
-        sparrowTopicEntity.setId (null);
-        sparrowTopicEntity.setIsDeleted (null);
-        sparrowTopicEntity.setGmtCreate (null);
-        sparrowTopicEntity.setGmtModified (null);
-    }
+@Data
+public class BatchSparrowMessage {
+    private List<SparrowMessage> sparrowMessageList;
 }

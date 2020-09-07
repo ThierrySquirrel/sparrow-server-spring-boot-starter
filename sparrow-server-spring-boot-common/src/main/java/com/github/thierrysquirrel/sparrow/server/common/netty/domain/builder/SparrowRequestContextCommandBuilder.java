@@ -90,5 +90,9 @@ public class SparrowRequestContextCommandBuilder {
         sparrowRequestContext.setModular (Modular.MESSAGE);
         sparrowRequestContext.setCommand (Command.PUSH_MESSAGE);
     }
+    public static void builderPushBatchMessage(SparrowRequestContext sparrowRequestContext){
+        sparrowRequestContext.setModular (Modular.MESSAGE);
+        sparrowRequestContext.setCommand (Command.PUSH_BATCH_MESSAGE);
+    }
 
 }

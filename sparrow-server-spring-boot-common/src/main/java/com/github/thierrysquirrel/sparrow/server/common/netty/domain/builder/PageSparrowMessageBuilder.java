@@ -36,8 +36,9 @@ public class PageSparrowMessageBuilder {
         return new PageSparrowMessage ();
     }
 
-    public static PageSparrowMessage builderPullMessageResponse(int pageIndex, int pageTotal, List<SparrowMessage> sparrowMessageList) {
+    public static PageSparrowMessage builderPullMessageResponse(String topic, int pageIndex, int pageTotal, List<SparrowMessage> sparrowMessageList) {
         PageSparrowMessage pageSparrowMessage = createPageSparrowMessage ();
+        pageSparrowMessage.setTopic (topic);
         pageSparrowMessage.setPageIndex (pageIndex);
         pageSparrowMessage.setPageTotal (pageTotal);
         pageSparrowMessage.setSparrowMessageList (sparrowMessageList);

@@ -48,6 +48,10 @@ public final class ThreadPoolConstant {
     public static final int PUSH_MESSAGE_MAXIMUM_POOL_SIZE = Runtime.getRuntime ().availableProcessors () * 2;
     public static final int PUSH_MESSAGE_KEEP_ALIVE_TIME = 0;
 
+    public static final String FLUSH_CONSTANT = "FlushConstant";
+    public static final int FLUSH_CONSTANT_CORE_POOL_SIZE = 1;
+    public static final int FLUSH_CONSTANT_INTERVAL = 2000;
+
     private ThreadPoolConstant() {
     }
 

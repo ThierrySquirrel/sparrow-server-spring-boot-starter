@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
-
-import lombok.Data;
-
-import java.util.List;
+package com.github.thierrysquirrel.sparrow.server.service.core.constant;
 
 /**
- * ClassName: PageSparrowMessage
+ * ClassName: SparrowMessageEntityConstantConstant
  * Description:
- * date: 2020/6/10 5:17
+ * date: 2020/9/7 22:37
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Data
-public class PageSparrowMessage {
-    private String topic;
-    private int pageIndex;
-    private int pageTotal;
-    private List<SparrowMessage> sparrowMessageList;
+public final class SparrowMessageEntityConstantConstant {
+    public static final int MAX_CAPACITY = 128;
+    public static final int TIME_OUT_MILLIS = 2000;
+
+    private SparrowMessageEntityConstantConstant() {
+    }
 }

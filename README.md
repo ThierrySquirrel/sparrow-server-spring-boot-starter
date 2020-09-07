@@ -21,7 +21,7 @@ Support Function:
         <dependency>
             <artifactId>sparrow-server-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>1.0.3-RELEASE</version>
+            <version>2.0.0-RELEASE</version>
         </dependency>
 ``` 
 
@@ -32,6 +32,7 @@ Support Function:
 spring.datasource.url= #MySQL DataBase Url
 spring.datasource.username= #MySQL DataBase username
 spring.datasource.password= #MySQL DataBase password
+mybatis.configuration.map-underscore-to-camel-case=true # Open Mybatis Convert
 sparrow.server.url=127.0.0.1:6060 # This Is Required For Service Startup
 sparrow.server.cluster-server-url=127.0.0.1:6060,127.0.0.1:6061 # If You Need A Cluster, Please Fill In This Way
  ```

@@ -29,6 +29,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 public final class ClientConstant {
     public static final EventLoopGroup CLIENT_EVENT_LOOP_GROUP = new NioEventLoopGroup ();
     public static final EventLoopGroup PRODUCER_EVENT_LOOP_GROUP = new NioEventLoopGroup ();
+    public static final EventLoopGroup CONSUMER_EVENT_LOOP_GROUP = new NioEventLoopGroup ();
     public static final int TIMEOUT = 1000;
 
     private ClientConstant() {

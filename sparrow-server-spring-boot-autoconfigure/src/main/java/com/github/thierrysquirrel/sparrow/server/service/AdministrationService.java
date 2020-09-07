@@ -15,10 +15,14 @@
  */
 package com.github.thierrysquirrel.sparrow.server.service;
 
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.BatchSparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.PageSparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowTopic;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.BatchSparrowMessageBuilder;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.PageSparrowMessageBuilder;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.SparrowMessageBuilder;
+import com.github.thierrysquirrel.sparrow.server.core.factory.execution.PushMessageFactoryExecution;
 import com.github.thierrysquirrel.sparrow.server.error.SparrowServerException;
 import com.github.thierrysquirrel.sparrow.server.mapper.SparrowMessageMapper;
 import com.github.thierrysquirrel.sparrow.server.mapper.SparrowTopicMapper;
@@ -29,7 +33,8 @@ import com.github.thierrysquirrel.sparrow.server.mapper.entity.SparrowTopicEntit
 import com.github.thierrysquirrel.sparrow.server.mapper.template.SparrowTopicEntityCacheTemplate;
 import com.github.thierrysquirrel.sparrow.server.mapper.utils.DateUtils;
 import com.github.thierrysquirrel.sparrow.server.mapper.utils.DomainUtils;
-import com.github.thierrysquirrel.sparrow.server.mapper.utils.SparrowTopicEntityUtils;
+import com.github.thierrysquirrel.sparrow.server.mapper.utils.MapperUtils;
+import com.github.thierrysquirrel.sparrow.server.service.core.container.SparrowMessageEntityConstant;
 import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -37,6 +42,7 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: AdministrationService
@@ -69,16 +75,17 @@ public class AdministrationService {
         sparrowTopicMapper.deleteAllByTopic (topic);
         sparrowMessageMapper.deleteAllByTopic (topic);
         sparrowTopicEntityCacheTemplate.invalidate (topic);
+        SparrowMessageEntityConstant.removeTopic (topic);
     }
 
     public SparrowTopicEntity getTopic(String topic) {
         SparrowTopicEntity sparrowTopicEntity = sparrowTopicEntityCacheTemplate.get (topic);
         if (ObjectUtils.isEmpty (sparrowTopicEntity)) {
             SparrowTopicEntity byTopicAndIsDeleted = sparrowTopicMapper.findByTopicAndIsDeleted (topic, MapperConstant.NOT_DELETED);
+
             if (ObjectUtils.isEmpty (byTopicAndIsDeleted)) {
                 return null;
             }
-            SparrowTopicEntityUtils.getTopic (byTopicAndIsDeleted);
             sparrowTopicEntityCacheTemplate.put (topic, byTopicAndIsDeleted);
             return byTopicAndIsDeleted;
         }
@@ -108,14 +115,20 @@ public class AdministrationService {
     }
 
     public SparrowMessage postMessage(String topic, byte[] message) {
-        SparrowTopicEntity byTopic = getTopic (topic);
-        if (ObjectUtils.isEmpty (byTopic)) {
+        Byte isCluster = getIsCluster (topic);
+        if (null == isCluster) {
             return null;
         }
-        Byte isCluster = byTopic.getIsCluster ();
         SparrowMessageEntity sparrowMessageEntity = SparrowMessageEntityBuilder.builderPostMessage (topic, isCluster, message);
         sparrowMessageMapper.saveSparrowMessageEntity (sparrowMessageEntity);
-        return DomainUtils.domainConvert (sparrowMessageEntity, SparrowMessage.class);
+
+        SparrowMessage sparrowMessage = DomainUtils.domainConvert (sparrowMessageEntity, SparrowMessage.class);
+        if (MapperUtils.isClusterConversion (isCluster)) {
+            PushMessageFactoryExecution.clusterPushMessage (sparrowMessage);
+        } else {
+            PushMessageFactoryExecution.broadcastPushMessage (sparrowMessage);
+        }
+        return sparrowMessage;
     }
 
     public PageSparrowMessage pullMessage(String topic, int pageIndex, int pageSize) {
@@ -128,7 +141,53 @@ public class AdministrationService {
         int pageTotal = (count + pageSize - MapperConstant.COUNT_OFFSET) / pageSize;
 
         List<SparrowMessage> sparrowMessagesList = DomainUtils.domainConvertList (sparrowMessageEntityList, SparrowMessage.class);
-        return PageSparrowMessageBuilder.builderPullMessageResponse (pageIndex, pageTotal, sparrowMessagesList);
+        return PageSparrowMessageBuilder.builderPullMessageResponse (topic, pageIndex, pageTotal, sparrowMessagesList);
+    }
+
+    public SparrowMessage pushBatchMessage(String topic, byte[] message) {
+        Byte isCluster = getIsCluster (topic);
+        if (null == isCluster) {
+            return null;
+        }
+        SparrowMessageEntity sparrowMessageEntity = SparrowMessageEntityBuilder.builderPostMessage (topic, isCluster, message);
+        boolean isFull = SparrowMessageEntityConstant.putSparrowMessageEntity (topic, sparrowMessageEntity);
+        if (isFull) {
+            List<SparrowMessageEntity> messageEntityList = SparrowMessageEntityConstant.getSparrowMessageEntity (topic);
+            saveAllAndPush (topic, isCluster, messageEntityList);
+        }
+        return SparrowMessageBuilder.builderProducersResponseSparrowMessage (topic, isCluster, message);
+
+    }
+
+    public void flushConstant() {
+        Map<String, List<SparrowMessageEntity>> messageEntityMap = SparrowMessageEntityConstant.getTimeoutSparrowMessageEntityMap ();
+        for (Map.Entry<String, List<SparrowMessageEntity>> entityEntry : messageEntityMap.entrySet ()) {
+            String topic = entityEntry.getKey ();
+            Byte isCluster = getIsCluster (topic);
+            if (null == isCluster) {
+                continue;
+            }
+            saveAllAndPush (topic, isCluster, entityEntry.getValue ());
+        }
+    }
+
+    private void saveAllAndPush(String topic, byte isCluster, List<SparrowMessageEntity> messageEntityList) {
+        if (ObjectUtils.isEmpty (messageEntityList)) {
+            return;
+        }
+        sparrowMessageMapper.saveAll (messageEntityList);
+
+        List<SparrowMessage> sparrowMessageList = DomainUtils.domainConvertList (messageEntityList, SparrowMessage.class);
+        BatchSparrowMessage batchSparrowMessage = BatchSparrowMessageBuilder.builderBatchSparrowMessage (sparrowMessageList);
+        if (MapperUtils.isClusterConversion (isCluster)) {
+            PushMessageFactoryExecution.clusterPushBatchMessage (topic, batchSparrowMessage);
+        } else {
+            PushMessageFactoryExecution.broadcastPushBatchMessage (topic, batchSparrowMessage);
+        }
+    }
+
+    private Byte getIsCluster(String topic) {
+        return getTopic (topic).getIsCluster ();
     }
 
 

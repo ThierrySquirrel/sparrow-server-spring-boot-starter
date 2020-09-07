@@ -15,12 +15,13 @@
  */
 package com.github.thierrysquirrel.sparrow.server.core.factory.execution;
 
-import com.github.thierrysquirrel.sparrow.server.core.factory.ConsumerLoadBalancing;
-import com.github.thierrysquirrel.sparrow.server.core.factory.HeartbeatFactory;
-import com.github.thierrysquirrel.sparrow.server.core.factory.PushMessageFactory;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.BatchSparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequestContext;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.SparrowRequestContextBuilder;
+import com.github.thierrysquirrel.sparrow.server.core.factory.ConsumerLoadBalancing;
+import com.github.thierrysquirrel.sparrow.server.core.factory.HeartbeatFactory;
+import com.github.thierrysquirrel.sparrow.server.core.factory.PushMessageFactory;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.util.ObjectUtils;
 
@@ -55,6 +56,24 @@ public class PushMessageFactoryExecution {
             return;
         }
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPushMessage (sparrowMessage);
+        topicConsumerChannel.forEach (ctx -> PushMessageFactory.pushMessage (ctx, sparrowRequestContext));
+    }
+
+    public static void clusterPushBatchMessage(String topic, BatchSparrowMessage batchSparrowMessage) {
+        ChannelHandlerContext channelHandlerContext = ConsumerLoadBalancing.getChannelHandlerContext (topic);
+        if (ObjectUtils.isEmpty (channelHandlerContext)) {
+            return;
+        }
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPushBatchMessage (batchSparrowMessage);
+        PushMessageFactory.pushMessage (channelHandlerContext, sparrowRequestContext);
+    }
+
+    public static void broadcastPushBatchMessage(String topic, BatchSparrowMessage batchSparrowMessage) {
+        List<ChannelHandlerContext> topicConsumerChannel = HeartbeatFactory.getTopicConsumerChannel (topic);
+        if (ObjectUtils.isEmpty (topicConsumerChannel)) {
+            return;
+        }
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPushBatchMessage (batchSparrowMessage);
         topicConsumerChannel.forEach (ctx -> PushMessageFactory.pushMessage (ctx, sparrowRequestContext));
     }
 }

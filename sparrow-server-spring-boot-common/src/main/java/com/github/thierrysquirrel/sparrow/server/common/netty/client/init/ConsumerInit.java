@@ -50,7 +50,7 @@ public class ConsumerInit {
             return;
         }
         Bootstrap bootstrap = new Bootstrap ();
-        bootstrap.group (ClientConstant.PRODUCER_EVENT_LOOP_GROUP)
+        bootstrap.group (ClientConstant.CONSUMER_EVENT_LOOP_GROUP)
                 .channel (NioSocketChannel.class)
                 .handler (new ConsumerInitChannelHandler (IdleStateConstant.OTHER_TIMEOUT,
                         IdleStateConstant.CONSUMER_WRITE_TIMEOUT,

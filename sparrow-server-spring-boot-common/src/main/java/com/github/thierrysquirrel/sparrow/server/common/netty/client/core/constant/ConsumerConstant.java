@@ -25,7 +25,7 @@ package com.github.thierrysquirrel.sparrow.server.common.netty.client.core.const
  */
 public final class ConsumerConstant {
     public static final int INIT_PULL_INDEX = 0;
-    public static final int PULL_SIZE = 64;
+    public static final int PULL_SIZE = 128;
 
     private ConsumerConstant() {
     }
