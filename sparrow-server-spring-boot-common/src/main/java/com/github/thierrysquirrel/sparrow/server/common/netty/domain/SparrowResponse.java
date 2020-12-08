@@ -18,9 +18,9 @@ package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
 import lombok.Data;
 
 /**
- * ClassName: SparrowResponse 
- * Description: 
- * date: 2020/6/8 17:42
+ * ClassName: SparrowResponse
+ * Description:
+ * date: 2020/12/7 0:54
  *
  * @author ThierrySquirrel
  * @since JDK 1.8

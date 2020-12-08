@@ -15,9 +15,9 @@
  */
 package com.github.thierrysquirrel.sparrow.server.common.netty.coder;
 
-import com.github.thierrysquirrel.sparrow.server.common.netty.constant.CoderConstant;
-import com.github.thierrysquirrel.sparrow.server.common.netty.core.utils.DecoderUtils;
-import com.github.thierrysquirrel.sparrow.server.common.netty.core.utils.SerializerUtils;
+import com.github.thierrysquirrel.sparrow.server.common.netty.coder.constant.CoderConstant;
+import com.github.thierrysquirrel.sparrow.server.common.netty.coder.utils.DecoderUtils;
+import com.github.thierrysquirrel.sparrow.server.common.netty.coder.utils.SerializerUtils;
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequestContext;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,9 +26,9 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
- * ClassName: SparrowDecoder 
- * Description: 
- * date: 2020/6/8 17:49
+ * ClassName: SparrowDecoder
+ * Description:
+ * date: 2020/12/7 0:52
  *
  * @author ThierrySquirrel
  * @since JDK 1.8

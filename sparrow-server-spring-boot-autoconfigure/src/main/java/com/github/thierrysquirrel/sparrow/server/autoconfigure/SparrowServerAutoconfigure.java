@@ -15,11 +15,9 @@
  */
 package com.github.thierrysquirrel.sparrow.server.autoconfigure;
 
-import com.github.thierrysquirrel.sparrow.server.autoconfigure.constant.ComponentScanConstant;
+import com.github.thierrysquirrel.sparrow.server.autoconfigure.constant.ScanConstant;
+import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import com.github.thierrysquirrel.sparrow.server.init.*;
-import com.github.thierrysquirrel.sparrow.server.mapper.builder.CacheTemplateBuilder;
-import com.github.thierrysquirrel.sparrow.server.mapper.template.SparrowTopicEntityCacheTemplate;
-import com.github.thierrysquirrel.sparrow.server.service.AdministrationService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,56 +28,50 @@ import org.springframework.context.annotation.Configuration;
 /**
  * ClassName: SparrowServerAutoconfigure
  * Description:
- * date: 2020/6/8 17:30
+ * date: 2020/12/7 1:28
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
 @Configuration
 @EnableConfigurationProperties(SparrowServerProperties.class)
-@ComponentScan(basePackages = ComponentScanConstant.DEFAULT_SCAN)
-@MapperScan(basePackages = ComponentScanConstant.MAPPER_SCAN)
+@ComponentScan(ScanConstant.MODULAR_SCAN)
+@MapperScan(ScanConstant.MAPPER_SCAN)
 public class SparrowServerAutoconfigure {
 
-    @Bean
-    @ConditionalOnMissingBean(SparrowServerEventInit.class)
-    public SparrowServerEventInit sparrowServerEventInit() {
-        return new SparrowServerEventInit ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(ModularMethodInit.class)
+	public ModularMethodInit modularMethodInit() {
+		return new ModularMethodInit();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(SparrowServerInit.class)
-    public SparrowServerInit sparrowServerInit() {
-        return new SparrowServerInit ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(SparrowServerInitialization.class)
+	public SparrowServerInitialization sparrowServerInitialization() {
+		return new SparrowServerInitialization();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(SparrowServerDatabaseInit.class)
-    public SparrowServerDatabaseInit sparrowServerDatabaseInit() {
-        return new SparrowServerDatabaseInit ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(SparrowMessageService.class)
+	public SparrowMessageService sparrowMessageService() {
+		return new SparrowMessageService();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(AdministrationService.class)
-    public AdministrationService administrationService() {
-        return new AdministrationService ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(SparrowMessageEntityInit.class)
+	public SparrowMessageEntityInit sparrowMessageEntityInit() {
+		return new SparrowMessageEntityInit();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(SparrowTopicEntityCacheTemplate.class)
-    public SparrowTopicEntityCacheTemplate sparrowTopicEntityCacheTemplate() {
-        return CacheTemplateBuilder.builderSparrowTopicEntityCacheTemplate ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(FlushTimeoutMessageInit.class)
+	public FlushTimeoutMessageInit flushTimeoutMessageInit() {
+		return new FlushTimeoutMessageInit();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(RemoveExpiredDataInit.class)
-    public RemoveExpiredDataInit removeExpiredDataInit() {
-        return new RemoveExpiredDataInit ();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(FlushConstantInit.class)
-    public FlushConstantInit flushConstantInit(){
-        return new FlushConstantInit ();
-    }
+	@Bean
+	@ConditionalOnMissingBean(DeleteTimeoutMessageInit.class)
+	public DeleteTimeoutMessageInit deleteTimeoutMessageInit() {
+		return new DeleteTimeoutMessageInit();
+	}
 }

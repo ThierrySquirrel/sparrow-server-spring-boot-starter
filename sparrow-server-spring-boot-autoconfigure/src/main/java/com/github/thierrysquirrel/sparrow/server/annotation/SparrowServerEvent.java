@@ -15,15 +15,14 @@
  */
 package com.github.thierrysquirrel.sparrow.server.annotation;
 
-import com.github.thierrysquirrel.sparrow.server.common.netty.constant.Command;
-import com.github.thierrysquirrel.sparrow.server.common.netty.constant.Modular;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
 
 import java.lang.annotation.*;
 
 /**
- * ClassName: SparrowServerEvent 
- * Description: 
- * date: 2020/6/8 18:30
+ * ClassName: SparrowServerEvent
+ * Description:
+ * date: 2020/12/7 1:27
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
@@ -32,7 +31,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface SparrowServerEvent {
-    Modular modular();
 
-    Command command();
+    Event event();
 }

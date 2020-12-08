@@ -15,14 +15,14 @@
  */
 package com.github.thierrysquirrel.sparrow.server.common.netty.domain;
 
-import com.github.thierrysquirrel.sparrow.server.common.netty.constant.Command;
-import com.github.thierrysquirrel.sparrow.server.common.netty.constant.Modular;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
+import com.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Modular;
 import lombok.Data;
 
 /**
- * ClassName: SparrowRequestContext 
- * Description: 
- * date: 2020/6/8 17:42
+ * ClassName: SparrowRequestContext
+ * Description:
+ * date: 2020/12/7 0:57
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
@@ -30,7 +30,7 @@ import lombok.Data;
 @Data
 public class SparrowRequestContext {
     private Modular modular;
-    private Command command;
+    private Event event;
     private SparrowRequest sparrowRequest;
     private SparrowResponse sparrowResponse;
 }

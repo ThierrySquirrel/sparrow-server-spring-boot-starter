@@ -20,15 +20,13 @@ import lombok.Data;
 /**
  * ClassName: SparrowMessage
  * Description:
- * date: 2020/6/10 4:34
+ * date: 2020/12/7 4:02
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
 @Data
 public class SparrowMessage {
-    private Long id;
-    private String topic;
-    private byte isCluster;
-    private byte[] message;
+	private Long id;
+	private byte[] message;
 }

@@ -21,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * ClassName: SparrowServerProperties
  * Description:
- * date: 2020/6/8 17:27
+ * date: 2020/12/7 1:27
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
@@ -34,8 +34,4 @@ public class SparrowServerProperties {
      * Sparrow Server Url
      */
     private String url;
-    /**
-     * Cluster Server Url
-     */
-    private String clusterServerUrl;
 }
