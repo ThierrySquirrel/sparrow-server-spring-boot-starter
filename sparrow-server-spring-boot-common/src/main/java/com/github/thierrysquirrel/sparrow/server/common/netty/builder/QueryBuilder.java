@@ -32,6 +32,7 @@ public class QueryBuilder {
 	}
 
 	public static <T> MpmcUnboundedXaddArrayQueue<T> builderUnboundedQueue() {
+
 		return new MpmcUnboundedXaddArrayQueue<>(QueryBuilderConstant.UNBOUNDED_CHUNK_SIZE, QueryBuilderConstant.UNBOUNDED_MAX_POOLED_CHUNKS);
 	}
 }
