@@ -24,7 +24,7 @@ Sparrow Server Spring Book Edition
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
     <groupId>com.github.thierrysquirrel</groupId>
-    <version>2.2.1.2-RELEASE</version>
+    <version>2.2.1.3-RELEASE</version>
 </dependency>
 ``` 
 
