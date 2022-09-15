@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.factory;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.container.MessageIdQuery;
@@ -37,69 +37,69 @@ import java.util.concurrent.TimeUnit;
 /**
  * ClassName: SparrowConsumerCheckFactory
  * Description:
- * date: 2020/12/8 4:05
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 @Slf4j
 public class SparrowConsumerCheckFactory {
-	private SparrowConsumerCheckFactory() {
-	}
+    private SparrowConsumerCheckFactory() {
+    }
 
 
-	public static boolean consumptionTimeoutIdList(String url) {
-		List<Long> idList = MessageIdQuery.pollTimeoutIdList(url);
-		if (idList.isEmpty()) {
-			return Boolean.FALSE;
-		}
-		Channel channel = initChannel(url);
-		if (channel == null) {
-			return Boolean.TRUE;
-		}
-		SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
-		channel.writeAndFlush(sparrowRequestContext);
-		return Boolean.FALSE;
-	}
+    public static boolean consumptionTimeoutIdList(String url) {
+        List<Long> idList = MessageIdQuery.pollTimeoutIdList(url);
+        if (idList.isEmpty()) {
+            return Boolean.FALSE;
+        }
+        Channel channel = initChannel(url);
+        if (channel == null) {
+            return Boolean.TRUE;
+        }
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
+        channel.writeAndFlush(sparrowRequestContext);
+        return Boolean.FALSE;
+    }
 
-	public static boolean checkMessageNumber(String topic) {
-		int messageNumber = MessageNumberContainer.getMessageNumber(topic);
-		if (messageNumber >= MessageNumberConstant.MAX_MESSAGE_NUMBER) {
-			SleepUtils.sleep(SleepUtilsConstant.MESSAGE_NUMBER_MAX);
-			return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
-	}
+    public static boolean checkMessageNumber(String topic) {
+        int messageNumber = MessageNumberContainer.getMessageNumber(topic);
+        if (messageNumber >= MessageNumberConstant.MAX_MESSAGE_NUMBER) {
+            SleepUtils.sleep(SleepUtilsConstant.MESSAGE_NUMBER_MAX);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
-	public static SparrowMessageBatch pullMessage(String url, String topic) {
+    public static SparrowMessageBatch pullMessage(String url, String topic) {
 
-		Channel channel = initChannel(url);
-		if (channel == null) {
-			return null;
-		}
+        Channel channel = initChannel(url);
+        if (channel == null) {
+            return null;
+        }
 
-		int requestOffset = RequestOffsetContainer.getRequestOffset();
-		CompletableFuture<SparrowMessageBatch> response = ResponseContainer.createResponse(requestOffset);
+        int requestOffset = RequestOffsetContainer.getRequestOffset();
+        CompletableFuture<SparrowMessageBatch> response = ResponseContainer.createResponse(requestOffset);
 
-		SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageRequest(requestOffset, topic);
-		channel.writeAndFlush(sparrowRequestContext);
-		try {
-			return response.get(ConsumerResponseConstant.TIMEOUT, TimeUnit.MILLISECONDS);
-		} catch (Exception e) {
-			log.debug("response null");
-		} finally {
-			ResponseContainer.remove(requestOffset);
-		}
-		return null;
-	}
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageRequest(requestOffset, topic);
+        channel.writeAndFlush(sparrowRequestContext);
+        try {
+            return response.get(ConsumerResponseConstant.TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            log.debug("response null");
+        } finally {
+            ResponseContainer.remove(requestOffset);
+        }
+        return null;
+    }
 
-	private static Channel initChannel(String url) {
-		try {
-			return SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
-		} catch (Exception e) {
-			log.error("initError", e);
-			SleepUtils.sleep(SleepUtilsConstant.CONNECTION_FAIL);
-		}
-		return null;
-	}
+    private static Channel initChannel(String url) {
+        try {
+            return SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
+        } catch (Exception e) {
+            log.error("initError", e);
+            SleepUtils.sleep(SleepUtilsConstant.CONNECTION_FAIL);
+        }
+        return null;
+    }
 }

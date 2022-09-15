@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.coder;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.coder.constant.CoderConstant;
@@ -28,31 +28,31 @@ import java.util.List;
 /**
  * ClassName: SparrowDecoder
  * Description:
- * date: 2020/12/7 0:52
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class SparrowDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        while (in.readableBytes () >= CoderConstant.MINIMUM_DECODING) {
-            int readerIndex = in.readerIndex ();
+        while (in.readableBytes() >= CoderConstant.MINIMUM_DECODING) {
+            int readerIndex = in.readerIndex();
 
-            if (!DecoderUtils.readSparrow (in)) {
-                in.readerIndex (readerIndex);
+            if (!DecoderUtils.readSparrow(in)) {
+                in.readerIndex(readerIndex);
                 return;
             }
-            int dataLength = in.readInt ();
-            if (in.readableBytes () < dataLength) {
-                in.readerIndex (readerIndex);
+            int dataLength = in.readInt();
+            if (in.readableBytes() < dataLength) {
+                in.readerIndex(readerIndex);
                 return;
             }
             byte[] data = new byte[dataLength];
-            in.readBytes (data);
-            SparrowRequestContext sparrowRequestContext = SerializerUtils.deSerialize (data, SparrowRequestContext.class);
-            out.add (sparrowRequestContext);
+            in.readBytes(data);
+            SparrowRequestContext sparrowRequestContext = SerializerUtils.deSerialize(data, SparrowRequestContext.class);
+            out.add(sparrowRequestContext);
         }
     }
 }

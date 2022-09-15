@@ -24,7 +24,7 @@ Sparrow Server Spring Book Edition
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
     <groupId>com.github.thierrysquirrel</groupId>
-    <version>2.2.1.4-RELEASE</version>
+    <version>2.3.0.0-RELEASE</version>
 </dependency>
 ``` 
 
@@ -32,9 +32,12 @@ Sparrow Server Spring Book Edition
 
  ```properties
  ## application.properties
-spring.datasource.url=#H2数据库Url
-spring.datasource.username=#H2数据库username
-spring.datasource.password=#H2数据库password
+server.port=8080 #端口
+spring.h2.console.enabled=true #开启h2控制台
+spring.h2.console.path=/h2 #h2控制器的访问路径
+spring.datasource.url=jdbc:h2:~/testDatasource #H2数据库Url
+spring.datasource.username=sa #H2数据库username
+spring.datasource.password=123456 #H2数据库password
 sparrow.server.url=127.0.0.1:6060 # 这是必须填写的，用于服务启动
  ```
 
@@ -51,6 +54,6 @@ public class SparrowServerApplication {
 }
  ```
  
- ![AmericanFlag](https://user-images.githubusercontent.com/49895274/184470961-b9e18632-881f-499f-846d-b555cd77a6c4.jpeg)  
+![Russian flag](https://user-images.githubusercontent.com/49895274/190372565-74be17ee-71f3-433c-81eb-089816e0c8bf.png)
 
  

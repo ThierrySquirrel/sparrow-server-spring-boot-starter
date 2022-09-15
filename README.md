@@ -24,7 +24,7 @@ The Cluster Is Determined By The Client And Can Connect To A Specified Number Of
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
     <groupId>com.github.thierrysquirrel</groupId>
-    <version>2.2.1.4-RELEASE</version>
+    <version>2.3.0.0-RELEASE</version>
 </dependency>
 ``` 
 
@@ -32,10 +32,13 @@ The Cluster Is Determined By The Client And Can Connect To A Specified Number Of
 
  ```properties
  ## application.properties
-spring.datasource.url=#H2 DataBase Url
-spring.datasource.username=#H2 DataBase username
-spring.datasource.password=#H2 DataBase password
-sparrow.server.url=127.0.0.1:6060 # This Is Required For Service Startup
+server.port=8080 #端口
+spring.h2.console.enabled=true #Open the H2 console
+spring.h2.console.path=/h2 #Access path of h2 controller
+spring.datasource.url=jdbc:h2:~/testDatasource #H2 database URL
+spring.datasource.username=sa #H2 database username
+spring.datasource.password=123456 #H2 database password
+sparrow.server.url=127.0.0.1:6060 #This is a mandatory field for service startup
  ```
 
 # Start Sparrow Server

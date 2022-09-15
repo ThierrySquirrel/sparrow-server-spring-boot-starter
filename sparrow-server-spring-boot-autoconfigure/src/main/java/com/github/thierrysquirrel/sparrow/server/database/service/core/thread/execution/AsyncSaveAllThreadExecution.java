@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.database.service.core.thread.execution;
 
 import com.github.thierrysquirrel.sparrow.server.database.mapper.entity.SparrowMessageEntity;
@@ -24,19 +24,19 @@ import java.util.List;
 /**
  * ClassName: AsyncSaveAllThreadExecution
  * Description:
- * date: 2020/12/7 5:29
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class AsyncSaveAllThreadExecution extends AbstractAsyncSaveAllThread {
 
-	public AsyncSaveAllThreadExecution(SparrowMessageService sparrowMessageService, List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
-		super(sparrowMessageService, sparrowMessageEntityList, topic);
-	}
+    public AsyncSaveAllThreadExecution(SparrowMessageService sparrowMessageService, List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
+        super(sparrowMessageService, sparrowMessageEntityList, topic);
+    }
 
-	@Override
-	protected void asyncSaveAll(SparrowMessageService sparrowMessageService, List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
-		sparrowMessageService.saveAll(sparrowMessageEntityList, topic);
-	}
+    @Override
+    protected void asyncSaveAll(SparrowMessageService sparrowMessageService, List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
+        sparrowMessageService.saveAll(sparrowMessageEntityList, topic);
+    }
 }

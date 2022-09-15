@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.core.container;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
@@ -26,24 +26,24 @@ import java.util.Map;
 /**
  * ClassName: ConsumerMessageQuery
  * Description:
- * date: 2020/12/7 6:14
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class ConsumerMessageQuery {
-	private static final Map<String, MpmcArrayQueue<List<SparrowMessage>>> CONSUMER_MESSAGE = Maps.newConcurrentMap();
+    private static final Map<String, MpmcArrayQueue<List<SparrowMessage>>> CONSUMER_MESSAGE = Maps.newConcurrentMap();
 
-	private ConsumerMessageQuery() {
-	}
+    private ConsumerMessageQuery() {
+    }
 
-	public static void putMessage(String topic, List<SparrowMessage> sparrowMessageList) {
-		CONSUMER_MESSAGE.computeIfAbsent(topic, key -> new MpmcArrayQueue<>(ConsumerMessageQueryConstant.CAPACITY))
-				.add(sparrowMessageList);
-	}
+    public static void putMessage(String topic, List<SparrowMessage> sparrowMessageList) {
+        CONSUMER_MESSAGE.computeIfAbsent(topic, key -> new MpmcArrayQueue<>(ConsumerMessageQueryConstant.CAPACITY))
+                .add(sparrowMessageList);
+    }
 
-	public static List<SparrowMessage> getMessage(String topic) {
-		return CONSUMER_MESSAGE.computeIfAbsent(topic, key -> new MpmcArrayQueue<>(ConsumerMessageQueryConstant.CAPACITY))
-				.poll();
-	}
+    public static List<SparrowMessage> getMessage(String topic) {
+        return CONSUMER_MESSAGE.computeIfAbsent(topic, key -> new MpmcArrayQueue<>(ConsumerMessageQueryConstant.CAPACITY))
+                .poll();
+    }
 }

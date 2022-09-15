@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.container;
 
 import com.google.common.collect.Maps;
@@ -23,26 +23,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * ClassName: MessageNumberContainer
  * Description:
- * date: 2020/12/8 2:14
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class MessageNumberContainer {
-	private static final Map<String, AtomicInteger> MESSAGE_NUMBER = Maps.newConcurrentMap();
+    private static final Map<String, AtomicInteger> MESSAGE_NUMBER = Maps.newConcurrentMap();
 
-	private MessageNumberContainer() {
-	}
+    private MessageNumberContainer() {
+    }
 
-	public static void addMessageNumber(String topic, int offset) {
-		MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).addAndGet(offset);
-	}
+    public static void addMessageNumber(String topic, int offset) {
+        MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).addAndGet(offset);
+    }
 
-	public static void decrement(String topic) {
-		MESSAGE_NUMBER.get(topic).decrementAndGet();
-	}
+    public static void decrement(String topic) {
+        MESSAGE_NUMBER.get(topic).decrementAndGet();
+    }
 
-	public static int getMessageNumber(String topic) {
-		return MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).get();
-	}
+    public static int getMessageNumber(String topic) {
+        return MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).get();
+    }
 }

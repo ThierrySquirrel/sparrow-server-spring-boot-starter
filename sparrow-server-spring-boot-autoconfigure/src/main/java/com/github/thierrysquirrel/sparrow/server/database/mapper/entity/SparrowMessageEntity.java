@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.database.mapper.entity;
 
 import lombok.Data;
@@ -22,17 +22,17 @@ import java.util.Date;
 /**
  * ClassName: SparrowMessageEntity
  * Description:
- * date: 2020/12/7 4:41
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 @Data
 public class SparrowMessageEntity {
-	private Long id;
-	private String topic;
-	private byte[] message;
-	private Byte isDeleted;
-	private Date gmtCreate;
-	private Date gmtModified;
+    private Long id;
+    private String topic;
+    private byte[] message;
+    private Byte isDeleted;
+    private Date gmtCreate;
+    private Date gmtModified;
 }

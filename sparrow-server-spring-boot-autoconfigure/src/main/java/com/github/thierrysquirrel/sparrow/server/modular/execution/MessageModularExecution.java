@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.modular.execution;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
@@ -33,39 +33,39 @@ import java.util.List;
 /**
  * ClassName: MessageModularExecution
  * Description:
- * date: 2020/12/7 6:45
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class MessageModularExecution {
-	private MessageModularExecution() {
-	}
+    private MessageModularExecution() {
+    }
 
-	public static void postMessage(SparrowMessageService sparrowMessageService, String topic, byte[] message) {
-		SparrowMessageEntity sparrowMessageEntity = SparrowMessageEntityBuilder.builderSparrowMessageEntity(topic, message);
+    public static void postMessage(SparrowMessageService sparrowMessageService, String topic, byte[] message) {
+        SparrowMessageEntity sparrowMessageEntity = SparrowMessageEntityBuilder.builderSparrowMessageEntity(topic, message);
 
-		List<SparrowMessageEntity> messageList = ProducerMessageQuery.putMessage(topic, sparrowMessageEntity);
-		if (ObjectUtils.isEmpty(messageList)) {
-			return;
-		}
-		SparrowMessageServiceExecution.asyncSaveAll(sparrowMessageService, messageList, topic);
-	}
+        List<SparrowMessageEntity> messageList = ProducerMessageQuery.putMessage(topic, sparrowMessageEntity);
+        if (ObjectUtils.isEmpty(messageList)) {
+            return;
+        }
+        SparrowMessageServiceExecution.asyncSaveAll(sparrowMessageService, messageList, topic);
+    }
 
-	public static void pullMessage(ChannelHandlerContext ctx, SparrowMessageService sparrowMessageService,Integer requestOffset, String topic) {
-		List<SparrowMessage> message = ConsumerMessageQuery.getMessage(topic);
-		if (ObjectUtils.isEmpty(message)) {
-			boolean tryDatabaseRead = DatabaseReadStateContainer.tryDatabaseRead(topic);
-			if (tryDatabaseRead) {
-				SparrowMessageServiceExecution.asyncFindAllByTopic(sparrowMessageService, topic);
-			}
-			return;
-		}
-		SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageResponse(requestOffset,message);
-		ctx.writeAndFlush(sparrowRequestContext);
-	}
+    public static void pullMessage(ChannelHandlerContext ctx, SparrowMessageService sparrowMessageService, Integer requestOffset, String topic) {
+        List<SparrowMessage> message = ConsumerMessageQuery.getMessage(topic);
+        if (ObjectUtils.isEmpty(message)) {
+            boolean tryDatabaseRead = DatabaseReadStateContainer.tryDatabaseRead(topic);
+            if (tryDatabaseRead) {
+                SparrowMessageServiceExecution.asyncFindAllByTopic(sparrowMessageService, topic);
+            }
+            return;
+        }
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageResponse(requestOffset, message);
+        ctx.writeAndFlush(sparrowRequestContext);
+    }
 
-	public static void confirmConsumption(SparrowMessageService sparrowMessageService, List<Long> idList) {
-		sparrowMessageService.updateAllByIdList(idList);
-	}
+    public static void confirmConsumption(SparrowMessageService sparrowMessageService, List<Long> idList) {
+        sparrowMessageService.updateAllByIdList(idList);
+    }
 }

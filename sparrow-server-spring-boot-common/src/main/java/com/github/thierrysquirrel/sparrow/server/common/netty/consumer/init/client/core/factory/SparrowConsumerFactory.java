@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.factory;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.container.MessageNumberContainer;
@@ -30,25 +30,25 @@ import java.util.List;
 /**
  * ClassName: SparrowConsumerFactory
  * Description:
- * date: 2020/12/8 2:12
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 @Slf4j
 public class SparrowConsumerFactory {
-	private SparrowConsumerFactory() {
-	}
+    private SparrowConsumerFactory() {
+    }
 
-	public static ConsumerState consumer(MessageListener messageListener, String topic, SparrowMessage sparrowMessage) {
-		ConsumerState consumer = messageListener.consumer(sparrowMessage.getMessage());
-		MessageNumberContainer.decrement(topic);
-		return consumer;
-	}
+    public static ConsumerState consumer(MessageListener messageListener, String topic, SparrowMessage sparrowMessage) {
+        ConsumerState consumer = messageListener.consumer(sparrowMessage.getMessage());
+        MessageNumberContainer.decrement(topic);
+        return consumer;
+    }
 
-	public static void confirmConsumption(String url, List<Long> idList) throws InterruptedException {
-		Channel channel = SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
-		SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
-		channel.writeAndFlush(sparrowRequestContext);
-	}
+    public static void confirmConsumption(String url, List<Long> idList) throws InterruptedException {
+        Channel channel = SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
+        channel.writeAndFlush(sparrowRequestContext);
+    }
 }

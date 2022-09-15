@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,24 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.database.service.core.constant;
 
 /**
  * ClassName: SparrowMessageServiceConstant
  * Description:
- * date: 2020/12/7 18:41
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public final class SparrowMessageServiceConstant {
-	public static final Byte IS_DELETE = 1;
-	public static final Byte IS_NOT_DELETE = 0;
-	public static final int RETENTION_TIME_DAY = 2;
-	public static final int DELETE_MESSAGE_NUMBER = 16384;
-	public static final int FIND_ALL_MESSAGE_NUMBER = 65536;
+    public static final Byte IS_DELETE = 1;
+    public static final Byte IS_NOT_DELETE = 0;
+    public static final int RETENTION_TIME_DAY = 2;
+    public static final int DELETE_MESSAGE_NUMBER = 16384;
+    public static final int FIND_ALL_MESSAGE_NUMBER = 65536;
 
-	private SparrowMessageServiceConstant() {
-	}
+    private SparrowMessageServiceConstant() {
+    }
 }

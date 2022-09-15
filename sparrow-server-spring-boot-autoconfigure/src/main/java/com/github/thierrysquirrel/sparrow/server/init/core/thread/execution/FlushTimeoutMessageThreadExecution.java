@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init.core.thread.execution;
 
 import com.github.thierrysquirrel.sparrow.server.core.container.ProducerMessageQuery;
@@ -28,26 +28,26 @@ import java.util.Map;
 /**
  * ClassName: FlushTimeoutMessageThreadExecution
  * Description:
- * date: 2020/12/7 6:56
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class FlushTimeoutMessageThreadExecution extends AbstractFlushTimeoutMessageThread {
-	public FlushTimeoutMessageThreadExecution(SparrowMessageService sparrowMessageService) {
-		super(sparrowMessageService);
-	}
+    public FlushTimeoutMessageThreadExecution(SparrowMessageService sparrowMessageService) {
+        super(sparrowMessageService);
+    }
 
-	@Override
-	protected void flush(SparrowMessageService sparrowMessageService) {
-		Map<String, List<SparrowMessageEntity>> timeMessage = ProducerMessageQuery.pollTimeoutMessage();
-		for (Map.Entry<String, List<SparrowMessageEntity>> timeMessageEntity : timeMessage.entrySet()) {
-			List<SparrowMessageEntity> sparrowMessageEntityList = timeMessageEntity.getValue();
-			if (ObjectUtils.isEmpty(sparrowMessageEntityList)) {
-				continue;
-			}
-			SparrowMessageServiceExecution.asyncSaveAll(sparrowMessageService, sparrowMessageEntityList, timeMessageEntity.getKey());
-		}
-	}
+    @Override
+    protected void flush(SparrowMessageService sparrowMessageService) {
+        Map<String, List<SparrowMessageEntity>> timeMessage = ProducerMessageQuery.pollTimeoutMessage();
+        for (Map.Entry<String, List<SparrowMessageEntity>> timeMessageEntity : timeMessage.entrySet()) {
+            List<SparrowMessageEntity> sparrowMessageEntityList = timeMessageEntity.getValue();
+            if (ObjectUtils.isEmpty(sparrowMessageEntityList)) {
+                continue;
+            }
+            SparrowMessageServiceExecution.asyncSaveAll(sparrowMessageService, sparrowMessageEntityList, timeMessageEntity.getKey());
+        }
+    }
 
 }

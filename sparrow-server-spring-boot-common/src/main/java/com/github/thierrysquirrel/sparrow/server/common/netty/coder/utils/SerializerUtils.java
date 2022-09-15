@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.coder.utils;
 
 import io.protostuff.LinkedBuffer;
@@ -23,25 +23,25 @@ import io.protostuff.runtime.RuntimeSchema;
 /**
  * ClassName: SerializerUtils
  * Description:
- * date: 2020/12/7 1:06
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class SerializerUtils {
     private SerializerUtils() {
     }
 
     @SuppressWarnings("unchecked")
     public static <T> byte[] serialize(T object) {
-        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema (object.getClass ());
-        return ProtobufIOUtil.toByteArray (object, schema, LinkedBuffer.allocate (LinkedBuffer.DEFAULT_BUFFER_SIZE));
+        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(object.getClass());
+        return ProtobufIOUtil.toByteArray(object, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
     }
 
     public static <T> T deSerialize(byte[] bytes, Class<T> clazz) {
-        RuntimeSchema<T> runtimeSchema = RuntimeSchema.createFrom (clazz);
-        T object = runtimeSchema.newMessage ();
-        ProtobufIOUtil.mergeFrom (bytes, object, runtimeSchema);
+        RuntimeSchema<T> runtimeSchema = RuntimeSchema.createFrom(clazz);
+        T object = runtimeSchema.newMessage();
+        ProtobufIOUtil.mergeFrom(bytes, object, runtimeSchema);
         return object;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,21 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.utils.constant;
 
 /**
  * ClassName: SleepUtilsConstant
  * Description:
- * date: 2020/12/8 2:42
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public final class SleepUtilsConstant {
-	public static final long CONNECTION_FAIL = 1000;
-	public static final int MESSAGE_NUMBER_MAX = 64;
+    public static final long CONNECTION_FAIL = 1000;
+    public static final int MESSAGE_NUMBER_MAX = 64;
 
-	private SleepUtilsConstant() {
-	}
+    private SleepUtilsConstant() {
+    }
 }

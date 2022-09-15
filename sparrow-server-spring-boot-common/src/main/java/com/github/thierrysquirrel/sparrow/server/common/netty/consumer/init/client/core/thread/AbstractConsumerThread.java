@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.thread;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.consumer.listener.MessageListener;
@@ -21,36 +21,36 @@ import com.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMess
 /**
  * ClassName: AbstractConsumerThread
  * Description:
- * date: 2020/12/8 3:56
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public abstract class AbstractConsumerThread implements Runnable {
-	private final MessageListener messageListener;
-	private final String url;
-	private final String topic;
-	private final SparrowMessage sparrowMessage;
+    private final MessageListener messageListener;
+    private final String url;
+    private final String topic;
+    private final SparrowMessage sparrowMessage;
 
-	protected AbstractConsumerThread(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) {
-		this.messageListener = messageListener;
-		this.url = url;
-		this.topic = topic;
-		this.sparrowMessage = sparrowMessage;
-	}
+    protected AbstractConsumerThread(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) {
+        this.messageListener = messageListener;
+        this.url = url;
+        this.topic = topic;
+        this.sparrowMessage = sparrowMessage;
+    }
 
-	/**
-	 * consumer
-	 *
-	 * @param messageListener messageListener
-	 * @param url             url
-	 * @param topic           topic
-	 * @param sparrowMessage  sparrowMessage
-	 */
-	protected abstract void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage);
+    /**
+     * consumer
+     *
+     * @param messageListener messageListener
+     * @param url             url
+     * @param topic           topic
+     * @param sparrowMessage  sparrowMessage
+     */
+    protected abstract void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage);
 
-	@Override
-	public void run() {
-		consumer(this.messageListener, this.url, this.topic, this.sparrowMessage);
-	}
+    @Override
+    public void run() {
+        consumer(this.messageListener, this.url, this.topic, this.sparrowMessage);
+    }
 }

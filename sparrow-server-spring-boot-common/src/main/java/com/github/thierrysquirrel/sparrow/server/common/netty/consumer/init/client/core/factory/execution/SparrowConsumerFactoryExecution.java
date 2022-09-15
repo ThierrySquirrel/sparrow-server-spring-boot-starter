@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.factory.execution;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.container.MessageIdQuery;
@@ -26,24 +26,24 @@ import java.util.List;
 /**
  * ClassName: SparrowConsumerFactoryExecution
  * Description:
- * date: 2020/12/8 3:47
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class SparrowConsumerFactoryExecution {
-	private SparrowConsumerFactoryExecution() {
-	}
+    private SparrowConsumerFactoryExecution() {
+    }
 
-	public static void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) throws InterruptedException {
-		ConsumerState consumer = SparrowConsumerFactory.consumer(messageListener, topic, sparrowMessage);
-		if (consumer == ConsumerState.SUCCESS) {
-			Long id = sparrowMessage.getId();
-			List<Long> idList = MessageIdQuery.putId(url, id);
-			if (idList.isEmpty()) {
-				return;
-			}
-			SparrowConsumerFactory.confirmConsumption(url, idList);
-		}
-	}
+    public static void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) throws InterruptedException {
+        ConsumerState consumer = SparrowConsumerFactory.consumer(messageListener, topic, sparrowMessage);
+        if (consumer == ConsumerState.SUCCESS) {
+            Long id = sparrowMessage.getId();
+            List<Long> idList = MessageIdQuery.putId(url, id);
+            if (idList.isEmpty()) {
+                return;
+            }
+            SparrowConsumerFactory.confirmConsumption(url, idList);
+        }
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init.core.thread.execution;
 
 import com.github.thierrysquirrel.sparrow.server.init.core.thread.AbstractSparrowServerInitializationThread;
@@ -22,19 +22,19 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * ClassName: SparrowServerInitializationThreadExecution
  * Description:
- * date: 2020/12/7 3:12
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 @Slf4j
 public class SparrowServerInitializationThreadExecution extends AbstractSparrowServerInitializationThread {
-	public SparrowServerInitializationThreadExecution(String sparrowServerUrl) {
-		super(sparrowServerUrl);
-	}
+    public SparrowServerInitializationThreadExecution(String sparrowServerUrl) {
+        super(sparrowServerUrl);
+    }
 
-	@Override
-	protected void initialization(String sparrowServerUrl) {
-		SparrowServerInit.init(sparrowServerUrl);
-	}
+    @Override
+    protected void initialization(String sparrowServerUrl) {
+        SparrowServerInit.init(sparrowServerUrl);
+    }
 }

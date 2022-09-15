@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.container;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,18 +20,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * ClassName: RequestOffsetContainer
  * Description:
- * date: 2020/12/8 1:37
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class RequestOffsetContainer {
-	private static final AtomicInteger REQUEST_OFFSET = new AtomicInteger();
+    private static final AtomicInteger REQUEST_OFFSET = new AtomicInteger();
 
-	private RequestOffsetContainer() {
-	}
+    private RequestOffsetContainer() {
+    }
 
-	public static int getRequestOffset() {
-		return REQUEST_OFFSET.incrementAndGet();
-	}
+    public static int getRequestOffset() {
+        return REQUEST_OFFSET.incrementAndGet();
+    }
 }

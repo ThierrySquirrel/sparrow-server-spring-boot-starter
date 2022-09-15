@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.database.service.core.container;
 
 import com.google.common.collect.Maps;
@@ -23,23 +23,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * ClassName: DatabaseReadStateContainer
  * Description:
- * date: 2020/12/8 0:57
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class DatabaseReadStateContainer {
-	private static final Map<String, AtomicBoolean> DATABASE_READ_STATE = Maps.newConcurrentMap();
+    private static final Map<String, AtomicBoolean> DATABASE_READ_STATE = Maps.newConcurrentMap();
 
-	private DatabaseReadStateContainer() {
-	}
+    private DatabaseReadStateContainer() {
+    }
 
-	public static boolean tryDatabaseRead(String topic) {
-		AtomicBoolean tryRead = DATABASE_READ_STATE.computeIfAbsent(topic, key -> new AtomicBoolean(Boolean.TRUE));
-		return tryRead.compareAndSet(Boolean.TRUE, Boolean.FALSE);
-	}
+    public static boolean tryDatabaseRead(String topic) {
+        AtomicBoolean tryRead = DATABASE_READ_STATE.computeIfAbsent(topic, key -> new AtomicBoolean(Boolean.TRUE));
+        return tryRead.compareAndSet(Boolean.TRUE, Boolean.FALSE);
+    }
 
-	public static void tryCloseDatabaseRead(String topic) {
-		DATABASE_READ_STATE.get(topic).compareAndSet(Boolean.FALSE, Boolean.TRUE);
-	}
+    public static void tryCloseDatabaseRead(String topic) {
+        DATABASE_READ_STATE.get(topic).compareAndSet(Boolean.FALSE, Boolean.TRUE);
+    }
 }

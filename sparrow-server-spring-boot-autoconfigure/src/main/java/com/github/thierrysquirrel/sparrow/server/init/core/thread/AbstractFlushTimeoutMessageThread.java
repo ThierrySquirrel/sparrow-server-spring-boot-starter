@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init.core.thread;
 
 import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
@@ -20,28 +20,28 @@ import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessage
 /**
  * ClassName: AbstractFlushTimeoutMessageThread
  * Description:
- * date: 2020/12/7 6:54
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public abstract class AbstractFlushTimeoutMessageThread implements Runnable {
 
-	private final SparrowMessageService sparrowMessageService;
+    private final SparrowMessageService sparrowMessageService;
 
-	protected AbstractFlushTimeoutMessageThread(SparrowMessageService sparrowMessageService) {
-		this.sparrowMessageService = sparrowMessageService;
-	}
+    protected AbstractFlushTimeoutMessageThread(SparrowMessageService sparrowMessageService) {
+        this.sparrowMessageService = sparrowMessageService;
+    }
 
-	/**
-	 * flush
-	 *
-	 * @param sparrowMessageService sparrowMessageService
-	 */
-	protected abstract void flush(SparrowMessageService sparrowMessageService);
+    /**
+     * flush
+     *
+     * @param sparrowMessageService sparrowMessageService
+     */
+    protected abstract void flush(SparrowMessageService sparrowMessageService);
 
-	@Override
-	public void run() {
-		flush(this.sparrowMessageService);
-	}
+    @Override
+    public void run() {
+        flush(this.sparrowMessageService);
+    }
 }

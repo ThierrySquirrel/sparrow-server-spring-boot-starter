@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.netty.core.container;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
@@ -25,23 +25,23 @@ import java.util.Map;
 /**
  * ClassName: ModularMethodContainer
  * Description:
- * date: 2020/12/7 1:57
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class ModularMethodContainer {
-    private static final Map<Modular, Map<Event, ModularMethod>> METHOD_CONTAINER = Maps.newConcurrentMap ();
+    private static final Map<Modular, Map<Event, ModularMethod>> METHOD_CONTAINER = Maps.newConcurrentMap();
 
     private ModularMethodContainer() {
     }
 
     public static void putMethodDomain(Modular modular, Event event, ModularMethod modularMethod) {
-        METHOD_CONTAINER.computeIfAbsent (modular, key -> Maps.newConcurrentMap ())
-                .put (event, modularMethod);
+        METHOD_CONTAINER.computeIfAbsent(modular, key -> Maps.newConcurrentMap())
+                .put(event, modularMethod);
     }
 
     public static ModularMethod getMethodDomain(Modular modular, Event event) {
-        return METHOD_CONTAINER.get (modular).get (event);
+        return METHOD_CONTAINER.get(modular).get(event);
     }
 }

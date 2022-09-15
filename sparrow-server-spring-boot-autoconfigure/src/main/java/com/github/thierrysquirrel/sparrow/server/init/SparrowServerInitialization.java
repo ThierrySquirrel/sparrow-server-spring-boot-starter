@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init;
 
 import com.github.thierrysquirrel.sparrow.server.autoconfigure.SparrowServerProperties;
 import com.github.thierrysquirrel.sparrow.server.init.core.factory.execution.SparrowServerInitializationExecution;
 import org.springframework.beans.factory.InitializingBean;
-
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * ClassName: SparrowServerInitialization
  * Description:
- * date: 2020/12/7 3:44
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class SparrowServerInitialization implements InitializingBean {
-    @Resource
+    @Autowired
     private SparrowServerProperties sparrowServerProperties;
 
     @Override
     public void afterPropertiesSet() {
-        SparrowServerInitializationExecution.initialization (sparrowServerProperties.getUrl ());
+        SparrowServerInitializationExecution.initialization(sparrowServerProperties.getUrl());
     }
 }

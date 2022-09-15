@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.factory.execution;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.consumer.init.client.core.builder.container.ConsumerThreadPoolExecutorContainer;
@@ -25,18 +25,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * ClassName: ConsumerExecution
  * Description:
- * date: 2020/12/8 4:20
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class ConsumerExecution {
-	private ConsumerExecution() {
-	}
+    private ConsumerExecution() {
+    }
 
-	public static void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) {
-		ConsumerThreadExecution consumerThreadExecution = new ConsumerThreadExecution(messageListener, url, topic, sparrowMessage);
-		ThreadPoolExecutor threadPoolExecutor = ConsumerThreadPoolExecutorContainer.getThreadPoolExecutor(topic);
-		threadPoolExecutor.execute(consumerThreadExecution);
-	}
+    public static void consumer(MessageListener messageListener, String url, String topic, SparrowMessage sparrowMessage) {
+        ConsumerThreadExecution consumerThreadExecution = new ConsumerThreadExecution(messageListener, url, topic, sparrowMessage);
+        ThreadPoolExecutor threadPoolExecutor = ConsumerThreadPoolExecutorContainer.getThreadPoolExecutor(topic);
+        threadPoolExecutor.execute(consumerThreadExecution);
+    }
 }

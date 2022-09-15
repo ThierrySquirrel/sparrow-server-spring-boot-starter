@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.common.netty.coder.utils;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.coder.constant.CoderConstant;
@@ -24,29 +24,29 @@ import java.util.Arrays;
 /**
  * ClassName: DecoderUtils
  * Description:
- * date: 2020/12/7 1:05
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class DecoderUtils {
     private DecoderUtils() {
     }
 
     public static boolean readSparrow(ByteBuf in) {
-        byte[] value = CoderIdentifyConstant.SPARROW.getValue ();
+        byte[] value = CoderIdentifyConstant.SPARROW.getValue();
         int length = value.length;
-        while (in.readableBytes () >= CoderConstant.MINIMUM_DECODING) {
+        while (in.readableBytes() >= CoderConstant.MINIMUM_DECODING) {
             byte[] readSparrow = new byte[length];
 
-            in.markReaderIndex ();
-            in.readBytes (readSparrow);
-            if (Arrays.equals (value, readSparrow)) {
+            in.markReaderIndex();
+            in.readBytes(readSparrow);
+            if (Arrays.equals(value, readSparrow)) {
                 return Boolean.TRUE;
             }
 
-            in.resetReaderIndex ();
-            in.readByte ();
+            in.resetReaderIndex();
+            in.readByte();
         }
         return Boolean.FALSE;
     }

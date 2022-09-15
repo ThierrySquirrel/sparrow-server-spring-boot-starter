@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,33 +12,33 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init.core.thread;
 
 /**
  * ClassName: AbstractSparrowServerInitializationThread
  * Description:
- * date: 2020/12/7 3:11
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public abstract class AbstractSparrowServerInitializationThread implements Runnable {
-	private final String sparrowServerUrl;
+    private final String sparrowServerUrl;
 
-	protected AbstractSparrowServerInitializationThread(String sparrowServerUrl) {
-		this.sparrowServerUrl = sparrowServerUrl;
-	}
+    protected AbstractSparrowServerInitializationThread(String sparrowServerUrl) {
+        this.sparrowServerUrl = sparrowServerUrl;
+    }
 
-	/**
-	 * Initialization
-	 *
-	 * @param sparrowServerUrl sparrowServerUrl
-	 */
-	protected abstract void initialization(String sparrowServerUrl);
+    /**
+     * Initialization
+     *
+     * @param sparrowServerUrl sparrowServerUrl
+     */
+    protected abstract void initialization(String sparrowServerUrl);
 
-	@Override
-	public void run() {
-		initialization (this.sparrowServerUrl);
-	}
+    @Override
+    public void run() {
+        initialization(this.sparrowServerUrl);
+    }
 }

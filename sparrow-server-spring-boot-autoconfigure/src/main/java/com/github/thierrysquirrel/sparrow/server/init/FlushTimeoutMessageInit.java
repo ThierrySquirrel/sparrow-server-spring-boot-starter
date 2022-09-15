@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.init;
 
 import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import com.github.thierrysquirrel.sparrow.server.init.core.factory.execution.FlushTimeoutMessageInitExecution;
 import org.springframework.beans.factory.InitializingBean;
-
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * ClassName: FlushTimeoutMessageInit
  * Description:
- * date: 2020/12/7 7:09
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class FlushTimeoutMessageInit implements InitializingBean {
-	@Resource
-	private SparrowMessageService sparrowMessageService;
+    @Autowired
+    private SparrowMessageService sparrowMessageService;
 
-	@Override
-	public void afterPropertiesSet() {
-		FlushTimeoutMessageInitExecution.flush(sparrowMessageService);
-	}
+    @Override
+    public void afterPropertiesSet() {
+        FlushTimeoutMessageInitExecution.flush(sparrowMessageService);
+    }
 }

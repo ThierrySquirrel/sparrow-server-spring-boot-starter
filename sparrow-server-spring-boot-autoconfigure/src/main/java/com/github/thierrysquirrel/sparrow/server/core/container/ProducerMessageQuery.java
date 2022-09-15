@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.core.container;
 
 import com.github.thierrysquirrel.sparrow.server.common.netty.builder.QueryBuilder;
@@ -30,56 +30,56 @@ import java.util.Map;
 /**
  * ClassName: ProducerMessageQuery
  * Description:
- * date: 2020/12/7 5:51
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public class ProducerMessageQuery {
-	private static final Map<String, MpmcUnboundedXaddArrayQueue<SparrowMessageEntity>> PRODUCER_MESSAGE = Maps.newConcurrentMap();
-	private static final Map<String, Long> PRODUCER_MESSAGE_PUT_TIME = Maps.newConcurrentMap();
+    private static final Map<String, MpmcUnboundedXaddArrayQueue<SparrowMessageEntity>> PRODUCER_MESSAGE = Maps.newConcurrentMap();
+    private static final Map<String, Long> PRODUCER_MESSAGE_PUT_TIME = Maps.newConcurrentMap();
 
-	private ProducerMessageQuery() {
-	}
+    private ProducerMessageQuery() {
+    }
 
-	public static List<SparrowMessageEntity> putMessage(String topic, SparrowMessageEntity sparrowMessageEntity) {
-		MpmcUnboundedXaddArrayQueue<SparrowMessageEntity> messageQuery = PRODUCER_MESSAGE.computeIfAbsent(topic, key -> QueryBuilder.builderUnboundedQueue());
-		messageQuery.offer(sparrowMessageEntity);
+    public static List<SparrowMessageEntity> putMessage(String topic, SparrowMessageEntity sparrowMessageEntity) {
+        MpmcUnboundedXaddArrayQueue<SparrowMessageEntity> messageQuery = PRODUCER_MESSAGE.computeIfAbsent(topic, key -> QueryBuilder.builderUnboundedQueue());
+        messageQuery.offer(sparrowMessageEntity);
 
-		PRODUCER_MESSAGE_PUT_TIME.put(topic, System.currentTimeMillis());
-		if (messageQuery.size() >= ProducerMessageQueryConstant.POLL_NUMBER) {
-			return pollMessage(topic);
-		}
-		return Collections.emptyList();
-	}
+        PRODUCER_MESSAGE_PUT_TIME.put(topic, System.currentTimeMillis());
+        if (messageQuery.size() >= ProducerMessageQueryConstant.POLL_NUMBER) {
+            return pollMessage(topic);
+        }
+        return Collections.emptyList();
+    }
 
-	public static Map<String, List<SparrowMessageEntity>> pollTimeoutMessage() {
-		Map<String, List<SparrowMessageEntity>> timeoutMessage = Maps.newConcurrentMap();
-		long thisTime = System.currentTimeMillis();
-		for (Map.Entry<String, Long> putTimeEntity : PRODUCER_MESSAGE_PUT_TIME.entrySet()) {
-			Long putTime = putTimeEntity.getValue();
-			if ((thisTime - putTime) > ProducerMessageQueryConstant.TIMEOUT) {
-				String topic = putTimeEntity.getKey();
-				List<SparrowMessageEntity> messageList = pollMessage(topic);
-				if (ObjectUtils.isEmpty(messageList)) {
-					continue;
-				}
-				timeoutMessage.put(topic, messageList);
-			}
-		}
-		return timeoutMessage;
-	}
+    public static Map<String, List<SparrowMessageEntity>> pollTimeoutMessage() {
+        Map<String, List<SparrowMessageEntity>> timeoutMessage = Maps.newConcurrentMap();
+        long thisTime = System.currentTimeMillis();
+        for (Map.Entry<String, Long> putTimeEntity : PRODUCER_MESSAGE_PUT_TIME.entrySet()) {
+            Long putTime = putTimeEntity.getValue();
+            if ((thisTime - putTime) > ProducerMessageQueryConstant.TIMEOUT) {
+                String topic = putTimeEntity.getKey();
+                List<SparrowMessageEntity> messageList = pollMessage(topic);
+                if (ObjectUtils.isEmpty(messageList)) {
+                    continue;
+                }
+                timeoutMessage.put(topic, messageList);
+            }
+        }
+        return timeoutMessage;
+    }
 
-	private static List<SparrowMessageEntity> pollMessage(String topic) {
-		MpmcUnboundedXaddArrayQueue<SparrowMessageEntity> messageQuery = PRODUCER_MESSAGE.get(topic);
-		List<SparrowMessageEntity> messageList = new ArrayList<>();
-		for (int i = 0; i < ProducerMessageQueryConstant.POLL_NUMBER; i++) {
-			SparrowMessageEntity message = messageQuery.poll();
-			if (ObjectUtils.isEmpty(message)) {
-				break;
-			}
-			messageList.add(message);
-		}
-		return messageList;
-	}
+    private static List<SparrowMessageEntity> pollMessage(String topic) {
+        MpmcUnboundedXaddArrayQueue<SparrowMessageEntity> messageQuery = PRODUCER_MESSAGE.get(topic);
+        List<SparrowMessageEntity> messageList = new ArrayList<>();
+        for (int i = 0; i < ProducerMessageQueryConstant.POLL_NUMBER; i++) {
+            SparrowMessageEntity message = messageQuery.poll();
+            if (ObjectUtils.isEmpty(message)) {
+                break;
+            }
+            messageList.add(message);
+        }
+        return messageList;
+    }
 }

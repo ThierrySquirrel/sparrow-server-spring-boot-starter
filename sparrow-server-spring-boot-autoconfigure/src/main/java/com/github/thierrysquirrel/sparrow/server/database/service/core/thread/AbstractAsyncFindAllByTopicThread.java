@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 the original author or authors.
+ * Copyright 2024/8/9 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ **/
 package com.github.thierrysquirrel.sparrow.server.database.service.core.thread;
 
 import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
@@ -20,30 +20,30 @@ import com.github.thierrysquirrel.sparrow.server.database.service.SparrowMessage
 /**
  * ClassName: AbstractAsyncFindAllByTopicThread
  * Description:
- * date: 2020/12/8 0:28
+ * Date:2024/8/9
  *
  * @author ThierrySquirrel
- * @since JDK 1.8
- */
+ * @since JDK21
+ **/
 public abstract class AbstractAsyncFindAllByTopicThread implements Runnable {
-	private final SparrowMessageService sparrowMessageService;
-	private final String topic;
+    private final SparrowMessageService sparrowMessageService;
+    private final String topic;
 
-	protected AbstractAsyncFindAllByTopicThread(SparrowMessageService sparrowMessageService, String topic) {
-		this.sparrowMessageService = sparrowMessageService;
-		this.topic = topic;
-	}
+    protected AbstractAsyncFindAllByTopicThread(SparrowMessageService sparrowMessageService, String topic) {
+        this.sparrowMessageService = sparrowMessageService;
+        this.topic = topic;
+    }
 
-	/**
-	 * findAllByTopic
-	 *
-	 * @param sparrowMessageService sparrowMessageService
-	 * @param topic                 topic
-	 */
-	protected abstract void findAllByTopic(SparrowMessageService sparrowMessageService, String topic);
+    /**
+     * findAllByTopic
+     *
+     * @param sparrowMessageService sparrowMessageService
+     * @param topic                 topic
+     */
+    protected abstract void findAllByTopic(SparrowMessageService sparrowMessageService, String topic);
 
-	@Override
-	public void run() {
-		findAllByTopic(this.sparrowMessageService, this.topic);
-	}
+    @Override
+    public void run() {
+        findAllByTopic(this.sparrowMessageService, this.topic);
+    }
 }
