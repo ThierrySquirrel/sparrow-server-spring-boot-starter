@@ -30,7 +30,7 @@
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
         <jctools-core.version>3.3.0</jctools-core.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <netty-all.version>4.1.75.Final</netty-all.version>
         <protostuff-core.version>1.8.0</protostuff-core.version>
         <protostuff-runtime.version>1.8.0</protostuff-runtime.version>
