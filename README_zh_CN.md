@@ -17,6 +17,12 @@ Sparrow Server Spring Book Edition
 
 [Sparrow专用客户端,通常,所有请求都来自这里](https://github.com/ThierrySquirrel/sparrow-spring-boot-starter)
 
+# 消息队列与分布式事务
+
+保证消息一定能够发送到服务端,保证消息一定能够被消费
+消息可重复发送验证,消息可重复消费
+最终一致性
+
 ## Quick Start
 
 ```xml

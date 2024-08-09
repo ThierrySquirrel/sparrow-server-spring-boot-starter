@@ -17,6 +17,12 @@ The Cluster Is Determined By The Client And Can Connect To A Specified Number Of
 
 [Sparrow Server Dedicated Client,Usually, All Requests Come From Here](https://github.com/ThierrySquirrel/sparrow-spring-boot-starter)
 
+# Message queues and distributed transactions
+
+Ensure that the message can be sent to the server and that the message can be consumed
+Messages can be sent repeatedly for verification, and messages can be consumed repeatedly
+Final consistency
+
 ## Quick Start
 
 ```xml
