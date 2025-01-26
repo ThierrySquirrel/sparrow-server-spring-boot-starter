@@ -60,6 +60,5 @@ public class SparrowServerApplication {
 }
  ```
  
-![Russian flag](https://user-images.githubusercontent.com/49895274/190372565-74be17ee-71f3-433c-81eb-089816e0c8bf.png)
 
  
